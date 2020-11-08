@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({
 
 
 app.use("/messages", route.messages)
+app.use("/search", route.search)
 
 app.listen(port, (err) => {
   if (err) {

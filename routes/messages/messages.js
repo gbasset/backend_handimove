@@ -2,8 +2,6 @@ const express = require("express")
 const connection = require('../../conf')
 const router = express.Router()
 
-/////// Send a message from the form contact //////////
-
 // get all messages 
 router.route(['/all'])
     .get(function (req, res) {
@@ -26,7 +24,7 @@ router.route(['/unread'])
             }
         })
     })
-router.route(['/message:id'])
+router.route(['/message/:id'])
     .get(function (req, res) {
         connection.query('SELECT * FROM `messages` WHERE id = ?', req.params.id, (err, results) => {
             if (err) {
@@ -47,7 +45,17 @@ router.route(['/message:id'])
             }
         });
     })
-
+    .delete(function (req, res) {
+        const id = req.params.id
+        connection.query('DELETE FROM messages WHERE id=?', id, err => {
+            if (err) {
+                res.render(err).status(500).send("Erreur lors de la suppression d'un header collection menu");
+            } else {
+                res.sendStatus(200);
+            }
+        });
+    })
+/////// Send a message from the form contact //////////
 router.route(['/send'])
     .post(function (req, res) {
         const formData = req.body;
@@ -59,7 +67,5 @@ router.route(['/send'])
             }
         })
     })
-// INSERT INTO`messages`(`id`, `subject`, `message`, `contact`, `status`) VALUES(NULL, 'manger caca', 'dscsdcd*\r\ndc\r\ns\r\ndc\r\nsd\r\nc\r\nsdc\r\nsd\r\ncdsdsc\r\n', 'john@gmail.com', 'unread');
-
 
 module.exports = router
