@@ -1,0 +1,27 @@
+{
+  "name": "backend_handimove",
+  "version": "1.0.0",
+  "description": "backend of handimove project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [
+    "node",
+    "js",
+    "backend",
+    "handimove",
+    "project"
+  ],
+  "author": "Basset Gaëtan",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.6"
+  }
+}
