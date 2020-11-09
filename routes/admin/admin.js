@@ -31,12 +31,58 @@ router.route(['/comment/:id'])
         const formData = req.body;
         connection.query('UPDATE comments SET ? WHERE id=?', [formData, id], (err, results) => {
             if (err) {
-                res.status(500).send("Erreur lors de la modification du produit");
+                res.status(500).send("Erreur lors de la modification du commentaire");
             } else {
                 res.sendStatus(200);
             }
         });
     })
 
+// Routes for the establishments
+router.route(['/establisments/:id'])
+    .put(function (req, res) {
+        const id = req.params.id;
+        const formData = req.body;
+        connection.query(`UPDATE establishment SET ? WHERE id_etablishment=?`, [formData, id], (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la modification de l'etablissement");
+                console.log('Query error: ' + err);
+            } else {
+                return connection.query(`SELECT * from  establishment WHERE id_etablishment=?`, id, (err, results) => {
+                    if (res) {
+                        res.json(results).status(200)
+                    }
+                })
+            }
+        })
+    })
+    .delete(function (req, res) {
+        const id = req.params.id;
+        connection.query(`DELETE FROM establishment WHERE id_etablishment =?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la supression de l'etablissement");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
+// get comment by id 
+router.route(['/establisments'])
+    .post(function (req, res) {
+        const formData = req.body;
+        connection.query(`INSERT INTO establishment SET ?`, formData, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la création de l'etablissement");
+                console.log('Query error: ' + err);
+            } else {
+                return connection.query(`SELECT * from  establishment WHERE id_etablishment=?`, results.insertId, (err, results) => {
+                    if (res) {
+                        res.json(results).status(200)
+                    }
+                })
 
+            }
+        })
+    })
 module.exports = router
