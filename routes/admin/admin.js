@@ -85,4 +85,68 @@ router.route(['/establisments'])
             }
         })
     })
+
+// Routes for the events
+router.route(['/event/:id'])
+    .get(function (req, res) {
+        const id = req.params.id;
+        connection.query(`SELECT * from events WHERE id=?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la modification de l'evenement");
+                console.log('Query error: ' + err);
+            } else {
+                return connection.query(`SELECT * from  events WHERE id=?`, id, (err, results) => {
+                    if (res) {
+                        res.json(results).status(200)
+                    }
+                })
+            }
+        })
+    })
+    .put(function (req, res) {
+        const id = req.params.id;
+        const formData = req.body;
+        connection.query(`UPDATE events SET ? WHERE id=?`, [formData, id], (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la modification de l'evenement");
+                console.log('Query error: ' + err);
+            } else {
+                return connection.query(`SELECT * from  events WHERE id=?`, id, (err, results) => {
+                    if (res) {
+                        res.json(results).status(200)
+                    }
+                })
+            }
+        })
+    })
+    .delete(function (req, res) {
+        const id = req.params.id;
+        connection.query(`DELETE FROM events WHERE id=?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la supression de l'événement");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
+// post a new event 
+router.route(['/event'])
+    .post(function (req, res) {
+        const formData = req.body;
+        connection.query('INSERT INTO events SET ?', formData, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur l'ajout de l'événement");
+                console.log('Query error: ' + err);
+            } else {
+                // res.json(results).status(200);
+                return connection.query(`SELECT * from events WHERE id=?`, results.insertId, (err, results) => {
+                    if (res) {
+                        res.json(results).status(200)
+                    }
+                })
+            }
+        })
+    })
+
 module.exports = router

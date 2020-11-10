@@ -7,6 +7,7 @@ const city = require("./search/city")
 
 // Routes admin
 const admin = require("./admin/admin")
+const adminUsers = require("./admin/users")
 
 
-module.exports = { messages, searchEstablishments, city, admin }
+module.exports = { messages, searchEstablishments, city, admin, adminUsers }

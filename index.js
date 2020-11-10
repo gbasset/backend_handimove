@@ -20,6 +20,7 @@ app.use("/messages", route.messages)
 app.use("/search", route.searchEstablishments)
 app.use("/searchby", route.city)
 app.use("/admin", route.admin)
+app.use("/admusers", route.adminUsers)
 
 app.listen(port, (err) => {
   if (err) {
