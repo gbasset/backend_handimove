@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
 app.use("/messages", route.messages)
 app.use("/search", route.searchEstablishments)
 app.use("/searchby", route.city)
@@ -24,6 +23,9 @@ app.use("/admusers", route.adminUsers)
 app.use("/comments", route.comments)
 app.use("/fav", route.fav)
 app.use("/users", route.users)
+app.use("/authentification", route.authentification)
+app.use("/register", route.register)
+
 
 app.listen(port, (err) => {
   if (err) {
