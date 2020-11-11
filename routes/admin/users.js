@@ -48,7 +48,7 @@ router.route(['/user/:id'])
         const id = req.params.id;
         connection.query("SET FOREIGN_KEY_CHECKS=0", (err, results) => {
             if (err) {
-                res.status(500).send("Erreur lors de la modification d'une collection");
+                res.status(500).send("Erreur lors de la suppression de la foreign key");
             } else {
                 connection.query(`DELETE FROM users WHERE id=?`, id, (err, results) => {
                     if (err) {

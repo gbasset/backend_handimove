@@ -21,6 +21,7 @@ app.use("/search", route.searchEstablishments)
 app.use("/searchby", route.city)
 app.use("/admin", route.admin)
 app.use("/admusers", route.adminUsers)
+app.use("/comments", route.comments)
 
 app.listen(port, (err) => {
   if (err) {
