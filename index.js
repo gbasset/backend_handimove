@@ -23,6 +23,7 @@ app.use("/admin", route.admin)
 app.use("/admusers", route.adminUsers)
 app.use("/comments", route.comments)
 app.use("/fav", route.fav)
+app.use("/users", route.users)
 
 app.listen(port, (err) => {
   if (err) {

@@ -13,4 +13,8 @@ const adminUsers = require("./admin/users")
 const comments = require("./comments/comments")
 // Routes fav 
 const fav = require("./fav/fav")
-module.exports = { messages, searchEstablishments, city, admin, adminUsers, comments, fav }
+
+// Routes fav 
+const users = require("./users/users")
+
+module.exports = { messages, searchEstablishments, city, admin, adminUsers, comments, fav, users }
