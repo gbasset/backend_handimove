@@ -52,5 +52,39 @@ router.route(['/user/:idUser/:idEstablishment'])
             }
         })
     })
+router.route(['/user/:idComment/'])
+    .put(function (req, res) {
+        const id = req.params.idComment;
+        const formData = req.body;
+        connection.query(`UPDATE comments SET ? WHERE id=?`, [formData, id], (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la modification du commentaire ");
+                console.log('Query error: ' + err);
+            } else {
+                return connection.query(`SELECT * from comments WHERE id=?`, id, (err, results) => {
+                    if (res) {
+                        res.json(results).status(200)
+                    }
+                })
+            }
+        })
+    })
+router.route(['/user/:id'])
+    .get(function (req, res) {
+        const id = req.params.id;
+        connection.query(`SELECT c.id AS "id_comment", c.name, c.comment, c.status, u.username, et.name AS "Establishment_name", u.id  FROM users u 
+        JOIN user_comments uc on u.id=uc.user_id 
+        JOIN comments c on uc.comment_id=c.id join etablishment_comments ec on u.id=ec.user_id 
+        JOIN establishment et on ec.etablishment_id=et.id_etablishment 
+        WHERE u.id =${id}
+        group by c.id`, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la récupération des commentaires ");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200)
+            }
+        })
+    })
 
 module.exports = router
