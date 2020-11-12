@@ -25,7 +25,8 @@ app.use("/fav", route.fav)
 app.use("/users", route.users)
 app.use("/authentification", route.authentification)
 app.use("/register", route.register)
-
+app.use("/images", route.images)
+app.use('/public', express.static("public"))
 
 app.listen(port, (err) => {
   if (err) {

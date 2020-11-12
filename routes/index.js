@@ -21,4 +21,8 @@ const users = require("./users/users")
 const authentification = require("./authentification/authentification")
 /// route for register
 const register = require("./register/register")
-module.exports = { messages, searchEstablishments, city, admin, adminUsers, comments, fav, users, register, authentification }
+
+// route for images 
+const images = require("./images/images")
+
+module.exports = { messages, searchEstablishments, city, admin, adminUsers, comments, fav, users, register, authentification, images }
