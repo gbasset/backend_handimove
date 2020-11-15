@@ -2,17 +2,6 @@ const express = require("express")
 const connection = require('../../conf')
 const router = express.Router()
 
-// get all establishments 
-router.route(['/establishments'])
-    .get(function (req, res) {
-        connection.query('SELECT * FROM establishment', (err, results) => {
-            if (err) {
-                res.status(500).send("Erreur lors de la récupération des etablissements");
-            } else {
-                res.json(results).status(200);
-            }
-        })
-    })
 //  get establishment by id 
 router.route(['/establishments/:id'])
     .get(function (req, res) {

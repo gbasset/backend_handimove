@@ -3,6 +3,17 @@ const connection = require('../../conf')
 const router = express.Router()
 
 // get all comment by status 
+router.route(['/estaall'])
+    .get(function (req, res) {
+        connection.query(`SELECT * from establishment`, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la récupération des commentaires");
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
+// get all comment by status 
 router.route(['/comments/all/:id'])
     .get(function (req, res) {
         const id = req.params.id
@@ -67,7 +78,7 @@ router.route(['/establisments/:id'])
             }
         })
     })
-// get comment by id 
+// create comment by id 
 router.route(['/establisments'])
     .post(function (req, res) {
         const formData = req.body;
