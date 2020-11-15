@@ -4,10 +4,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const connection = require('../../conf')
 const secret = process.env.JWT_SECRET
-
-
 const router = express.Router()
-
 
 /**
  * Route post d'authentification

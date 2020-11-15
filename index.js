@@ -14,12 +14,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
+app.get('/home', (req, res) => {
+  res.send("Let's rock!").status(200)
+})
 app.use("/messages", route.messages)
 app.use("/search", route.searchEstablishments)
 app.use("/searchby", route.city)
 app.use("/admin", route.admin)
-app.use("/admusers", route.adminUsers)
+app.use("/adminusers", route.adminUsers)
 app.use("/comments", route.comments)
 app.use("/fav", route.fav)
 app.use("/users", route.users)
