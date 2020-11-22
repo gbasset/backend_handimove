@@ -19,6 +19,7 @@ app.get('/home', (req, res) => {
 })
 app.use("/messages", route.messages)
 app.use("/search", route.searchEstablishments)
+app.use("/events", route.events)
 app.use("/searchby", route.city)
 app.use("/admin", route.admin)
 app.use("/adminusers", route.adminUsers)

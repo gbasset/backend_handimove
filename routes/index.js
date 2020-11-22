@@ -3,6 +3,7 @@ const messages = require("./messages/messages")
 
 // Routes search
 const searchEstablishments = require("./search/establishments")
+const events = require("./search/events")
 const city = require("./search/city")
 
 // Routes admin
@@ -25,4 +26,4 @@ const register = require("./register/register")
 // route for images 
 const images = require("./images/images")
 
-module.exports = { messages, searchEstablishments, city, admin, adminUsers, comments, fav, users, register, authentification, images }
+module.exports = { messages, searchEstablishments, events, city, admin, adminUsers, comments, fav, users, register, authentification, images }
