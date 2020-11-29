@@ -42,6 +42,8 @@ router.post('/', (req, res) => {
     login: req.body.login,
     username: req.body.username,
     mail: req.body.mail,
+    question: req.body.question,
+    response_question: req.body.response_question,
     password: bcrypt.hashSync(req.body.password) //on chiffre le mot de passe grace a bcrypt => bcrypt doc pour plus de secu
   }
 
@@ -57,7 +59,7 @@ router.post('/', (req, res) => {
     }
 
     else if (result.length > 0) {
-      return res.status(409).send('User already exists') // si on a un resultat, l'email est deja enregistre on renvoie une 409
+      return res.status(409).send('Un utilisateur avec ce login existe déjà dans la base . ') // si on a un resultat, l'email est deja enregistre on renvoie une 409
     }
 
     /**

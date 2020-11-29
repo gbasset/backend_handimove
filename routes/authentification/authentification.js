@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
   const emailRegEx = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
 
   if (!emailRegEx.test(req.body.mail)) { //on test l'email fournit avec la regex 'emailRegEx'
-    return res.status(401).send('Unauthorized mail')
+    return res.status(401).send('Le format de cet email est invalide')
   }
 
   const email = req.body.mail
@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
     if (err) {
       return res.status(500).send(err)
     } else if (!result[0]) { // on verifie la presence d'un resultat dans la reponse
-      return res.status(409).send('Unknown user') // si pas de resultat l'email n'est pas enregistre en base donc l'utilisateur est inconnu
+      return res.status(409).send('Cet utilisateur n\'existe pas dans notre base de donnée') // si pas de resultat l'email n'est pas enregistre en base donc l'utilisateur est inconnu
     }
     /**
      * Test du mot de passe envoye.
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
     const passwordIsValid = bcrypt.compareSync(password, result[0].password); // comparaison entre le mot de passe envoye et le hash suvegarde en base grace a compareSync de bcrypt
     // console.log(passwordIsValid);
     if (!passwordIsValid) {
-      return res.status(401).send({ auth: false, token: null });
+      return res.status(401).send("Ce mot de passe est invalide");
       // Si passwordValid est false le mot de passe est faux, on renvoie donc une 401 
     }
     /**
