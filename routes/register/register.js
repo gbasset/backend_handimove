@@ -76,7 +76,7 @@ router.post('/', (req, res) => {
        * Renvoie de l'utilisateur enregistre au front
        */
 
-      connection.query(`SELECT id, login, username, mail, town FROM users WHERE id =?`, result.insertId, (err, result) => { //on ne renvoie JAMAIS le mot de passe au front.
+      connection.query(`SELECT id, login, username, mail, town, is_admin, avatar_url, question FROM users WHERE id =?`, result.insertId, (err, result) => { //on ne renvoie JAMAIS le mot de passe au front.
         if (err) {
           console.log(err);
           return res.status(500).send('Internal server error')

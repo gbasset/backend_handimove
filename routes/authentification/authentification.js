@@ -28,10 +28,11 @@ router.post('/', (req, res) => {
    * Recuperation de l'utilisateur par son email
    */
 
-  connection.query(`SELECT * FROM users WHERE mail = ?`, email, (err, result) => {
+  connection.query(`SELECT avatar_url, username, mail, town, login, id as "id_user", is_admin, question, password  FROM users WHERE mail = ?`, email, (err, result) => {
     // console.log(email, password);
 
     if (err) {
+      console.log('Query error: ' + err);
       return res.status(500).send(err)
     } else if (!result[0]) { // on verifie la presence d'un resultat dans la reponse
       return res.status(409).send('Cet utilisateur n\'existe pas dans notre base de donnée') // si pas de resultat l'email n'est pas enregistre en base donc l'utilisateur est inconnu
