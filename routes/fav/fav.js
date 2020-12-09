@@ -19,7 +19,7 @@ router.route(['/establishment/:idUser/:idEstablishment'])
 router.route(['/establishments/:id'])
     .get(function (req, res) {
         const id = req.params.id;
-        connection.query(`SELECT u.username, u.id as "id_user", es.name as "establishment_name", es.region, es.category, es.phone, es.town, es.activity, es.id_etablishment as "id_establishment", es.url_website as "url_establish" , uf.id as "ID_fav" FROM users u join user_fav_etablish uf on u.id=uf.user_id join establishment es on uf.id_etablish=es.id_etablishment where u.id=${id} GROUP BY es.name ORDER BY es.name`, (err, results) => {
+        connection.query(`SELECT u.username, u.id as "id_user", es.handicaps, es.name as "establishment_name", es.region, es.category, es.phone, es.town, es.activity, es.id_etablishment as "id_establishment", es.url_website , uf.id as "ID_fav" FROM users u join user_fav_etablish uf on u.id=uf.user_id join establishment es on uf.id_etablish=es.id_etablishment where u.id=${id} GROUP BY es.name ORDER BY es.name`, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de l'affichage des etablissements favoris");
                 console.log('Query error: ' + err)
@@ -32,7 +32,7 @@ router.route(['/establishments/:id'])
         const id = req.params.id;
         connection.query(`DELETE FROM user_fav_etablish WHERE id=${id}`, (err, results) => {
             if (err) {
-                res.status(500).send("Erreur lors de l'affichage de la supression du favoris");
+                res.status(500).send("Erreur lors de la supression du favoris");
                 console.log('Query error: ' + err)
             } else {
                 res.json(results).status(200)
