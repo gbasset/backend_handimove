@@ -45,6 +45,7 @@ router.post('/', (req, res) => {
     const passwordIsValid = bcrypt.compareSync(password, result[0].password); // comparaison entre le mot de passe envoye et le hash suvegarde en base grace a compareSync de bcrypt
     // console.log(passwordIsValid);
     if (!passwordIsValid) {
+      console.log('Query: ' + err);
       return res.status(401).send("Ce mot de passe est invalide");
       // Si passwordValid est false le mot de passe est faux, on renvoie donc une 401 
     }
