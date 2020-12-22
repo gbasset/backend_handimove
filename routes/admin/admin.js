@@ -1,7 +1,57 @@
 const express = require("express")
 const connection = require('../../conf')
 const router = express.Router()
+//  get establishment by id 
+router.route(['/establishments/:name'])
+    .get(function (req, res) {
+        const name = req.params.name
+        connection.query(`SELECT * FROM establishment WHERE name LIKE "${name}%"`, (err, results) => {
+            if (err) {
+                console.log('Query error: ' + err);
+                res.status(500).send("Erreur lors de la récupération des etablisements");
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
+router.route(['/event/:name'])
+    .get(function (req, res) {
+        const name = req.params.name
+        connection.query(`SELECT * from events  WHERE name LIKE "${name}%"`, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la recherche des événement");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200)
+            }
 
+        })
+    })
+router.route(['/users/:name'])
+    .get(function (req, res) {
+        const name = req.params.name
+        connection.query(`SELECT u.username, u.id, u.is_admin, u.login, u.mail , t.name as townname from users u  
+        join town t on u.town=t.id WHERE u.username LIKE "${name}%"
+        `, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la recherche des utilisateurs");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200)
+            }
+
+        })
+    })
+router.route(['/comments'])
+    .get(function (req, res) {
+        connection.query(`select u.username, u.id as id_user, u.username, com.name as "comment_name", com.comment, com.id as "comment_id", com.status, com.date, etab.name as "establishment_name", etab.id_etablishment as id_etabl FROM establishment etab inner join etablishment_comments ac on etab.id_etablishment=ac.etablishment_id INNER JOIN comments com on ac.comment_id=com.id INNER JOIN users u ON ac.user_id=u.id WHERE com.status = 0`, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la récupération des commentaires ");
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
 // get all comment by status 
 router.route(['/estaall'])
     .get(function (req, res) {
