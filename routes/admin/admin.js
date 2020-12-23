@@ -159,24 +159,21 @@ router.route(['/establisments'])
             }
         })
     })
-
-// Routes for the events
-router.route(['/event/:id'])
+router.route(['/events/:id'])
     .get(function (req, res) {
         const id = req.params.id;
-        connection.query(`SELECT * from events WHERE id=?`, id, (err, results) => {
+        connection.query(` SELECT e.id, e.name, e.date_begin, e.date_end, e.description, e.title, e.handicaps, e.address, e.town_id, e.event_url, e.id_region, e.id_department, t.name as town , d.name as depart_name, r.name as region_name FROM events e join town t on e.town_id=t.id
+        join departments d on e.id_department=d.id  join regions r on e.id_region=r.id WHERE e.id=${id}`, (err, results) => {
             if (err) {
-                res.status(500).send("Erreur lors de la modification de l'evenement");
+                res.status(500).send("Erreur lors de la récupération des commentaires ");
                 console.log('Query error: ' + err);
             } else {
-                return connection.query(`SELECT * from  events WHERE id=?`, id, (err, results) => {
-                    if (res) {
-                        res.json(results).status(200)
-                    }
-                })
+                res.json(results).status(200);
             }
         })
     })
+// Routes for the events
+router.route(['/event/:id'])
     .put(function (req, res) {
         const id = req.params.id;
         const formData = req.body;

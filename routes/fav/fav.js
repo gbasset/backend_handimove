@@ -58,7 +58,7 @@ router.route(['/event/:idUser/:idEvent'])
 router.route(['/event/:id'])
     .get(function (req, res) {
         const id = req.params.id;
-        connection.query(`SELECT u.username, u.id as "user_id" , ev.id as "id_event", ev.name, ev.date_begin, ev.date_end, ev.title, ev.address, ev.handicaps, ev.town_id, ev.event_url, ev.description, t.name, t.zipcode, t.latitude, t.longitude, ufe.id AS "ID_fav" from users u join  user_fav_events ufe on u.id=ufe.user_id join events ev on ufe.event_id=ev.id join town t on ev.town_id=t.id where u.id =${id} ORDER BY ev.id`, (err, results) => {
+        connection.query(`SELECT u.username, u.id as "user_id" , ev.id as "id_event", ev.name, ev.date_begin, ev.date_end, ev.title, ev.address, ev.handicaps, ev.town_id, ev.event_url, ev.description, t.name as town, t.zipcode, t.latitude, t.longitude, ufe.id AS "ID_fav" from users u join  user_fav_events ufe on u.id=ufe.user_id join events ev on ufe.event_id=ev.id join town t on ev.town_id=t.id where u.id =${id} ORDER BY ev.id`, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de l'affichage des événements favoris");
                 console.log('Query error: ' + err)

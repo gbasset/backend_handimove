@@ -7,6 +7,7 @@ const fs = require("fs");
 
 router.post("/upload/establish/:id", upload.array("file"), (req, res, next) => {
     const id = req.params.id;
+    console.log('files', req.files);
     let error = false;
     req.files.map(file => {
         console.log(file);
