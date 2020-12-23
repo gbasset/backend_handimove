@@ -47,6 +47,7 @@ router.route(['/comments'])
         connection.query(`select u.username, u.id as id_user, u.username, com.name as "comment_name", com.comment, com.id as "comment_id", com.status, com.date, etab.name as "establishment_name", etab.id_etablishment as id_etabl FROM establishment etab inner join etablishment_comments ac on etab.id_etablishment=ac.etablishment_id INNER JOIN comments com on ac.comment_id=com.id INNER JOIN users u ON ac.user_id=u.id WHERE com.status = 0`, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de la récupération des commentaires ");
+                console.log('Query error: ' + err);
             } else {
                 res.json(results).status(200);
             }
@@ -101,10 +102,22 @@ router.route(['/comment/:id'])
 
 // Routes for the establishments
 router.route(['/establisments/:id'])
-    .put(function (req, res) {
+    .get(function (req, res) {
         const id = req.params.id;
+        connection.query(`SELECT * from establishment WHERE id_etablishment=?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la modification de l'etablissement");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200)
+            }
+        })
+    })
+    .put(function (req, res) {
+        const id = req.params.id
+        console.log("id", id);
         const formData = req.body;
-        connection.query(`UPDATE establishment SET ? WHERE id_etablishment=?`, [formData, id], (err, results) => {
+        connection.query(`UPDATE establishment SET ? WHERE id_etablishment=${id}`, [formData], (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de la modification de l'etablissement");
                 console.log('Query error: ' + err);
