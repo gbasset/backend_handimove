@@ -44,7 +44,7 @@ router.route(['/users/:name'])
     })
 router.route(['/comments'])
     .get(function (req, res) {
-        connection.query(`select u.username, u.id as id_user, u.username, com.name as "comment_name", com.comment, com.id as "comment_id", com.status, com.date, etab.name as "establishment_name", etab.id_etablishment as id_etabl FROM establishment etab inner join etablishment_comments ac on etab.id_etablishment=ac.etablishment_id INNER JOIN comments com on ac.comment_id=com.id INNER JOIN users u ON ac.user_id=u.id WHERE com.status = 0`, (err, results) => {
+        connection.query(`select u.username, u.id as id_user, u.username, com.name as "comment_name", com.comment, com.id as "comment_id", com.status, com.date, etab.name as "establishment_name", etab.id_etablishment as id_etabl FROM establishment etab inner join etablishment_comments ac on etab.id_etablishment=ac.etablishment_id INNER JOIN comments com on ac.comment_id=com.id INNER JOIN users u ON ac.user_id=u.id  `, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de la récupération des commentaires ");
                 console.log('Query error: ' + err);
@@ -80,7 +80,9 @@ router.route(['/comments/all/:id'])
 router.route(['/comment/:id'])
     .get(function (req, res) {
         const id = req.params.id
-        connection.query(`SELECT c.id as "comment_id", c.name as "comment_name",c.id_user,c.comment, c.status as "status_comment",u.username, u.login, u.id as "id_user" FROM comments c join user_comments uc on c.id_user=uc.user_id join users u ON uc.user_id=u.id WHERE c.id=${id} GROUP BY c.id`, (err, results) => {
+        connection.query(`SELECT et.name as "establish_name", c.id as "comment_id", c.name as "comment_name",c.id_user,c.comment, c.status as "status_comment",u.username, u.login, u.id as "id_user" FROM comments c join user_comments uc on c.id_user=uc.user_id join users u ON uc.user_id=u.id 
+        left Join etablishment_comments ec on c.id=ec.comment_id 
+        join establishment et on ec.etablishment_id=et.id_etablishment WHERE c.id=${id} GROUP BY c.id`, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de la récupération du commentaire");
             } else {
@@ -91,13 +93,26 @@ router.route(['/comment/:id'])
     .put(function (req, res) { // modifier un message
         const id = req.params.id;
         const formData = req.body;
-        connection.query('UPDATE comments SET ? WHERE id=?', [formData, id], (err, results) => {
+        console.log("formData", formData);
+        connection.query(`UPDATE comments SET ? WHERE id=${id}`, [formData], (err, results) => {
             if (err) {
+                console.log('Query error: ' + err);
                 res.status(500).send("Erreur lors de la modification du commentaire");
             } else {
                 res.sendStatus(200);
             }
         });
+    })
+    .delete(function (req, res) {
+        const id = req.params.id;
+        connection.query(`DELETE FROM comments WHERE id=?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la supression de l'etablissement");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200);
+            }
+        })
     })
 
 // Routes for the establishments
