@@ -31,7 +31,7 @@ router.route(['/users/:name'])
     .get(function (req, res) {
         const name = req.params.name
         connection.query(`SELECT u.username, u.id, u.is_admin, u.login, u.mail , t.name as townname from users u  
-        join town t on u.town=t.id WHERE u.username LIKE "${name}%"
+        join town t on u.town=t.id WHERE u.username LIKE "%${name}%"
         `, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de la recherche des utilisateurs");

@@ -19,7 +19,9 @@ router.route(['/users'])
 router.route(['/user/:id'])
     .get(function (req, res) {
         const id = req.params.id;
-        connection.query(`SELECT * from users WHERE id=?`, id, (err, results) => {
+        connection.query(`SELECT u.username, t.name as town, u.mail, u.is_admin, u.login, u.avatar_url, u.question, u.response_question  FROM users u 
+        JOIN town t on u.town=t.id
+        WHERE u.id=${id}`, (err, results) => {
             if (err) {
                 res.status(500).send("Erreur lors de la récupération de l'utilisateur");
                 console.log('Query error: ' + err);
