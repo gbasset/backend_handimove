@@ -61,6 +61,7 @@ router.route(['/send'])
         const formData = req.body;
         connection.query('INSERT INTO messages SET ?', formData, (err, results) => {
             if (err) {
+                console.log('Query error: ' + err);
                 res.status(500).send("Erreur  l'ajout du message");
             } else {
                 res.json(results).status(200);

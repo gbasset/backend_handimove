@@ -167,4 +167,17 @@ router.route(['/avatars'])
             }
         })
     })
+
+router.route(['/avatar/:id'])
+    .delete(function (req, res) {
+        const id = req.params.id;
+        connection.query(`Delete from avatars WHERE id=?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la suppresion de l'avatar");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
 module.exports = router

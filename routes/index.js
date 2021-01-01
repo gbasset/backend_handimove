@@ -26,4 +26,7 @@ const register = require("./register/register")
 // route for images 
 const images = require("./images/images")
 
-module.exports = { messages, searchEstablishments, events, city, admin, adminUsers, comments, fav, users, register, authentification, images }
+// route for images 
+const mdph = require("./mdph/mdph")
+
+module.exports = { messages, searchEstablishments, events, city, admin, adminUsers, comments, fav, users, register, authentification, images, mdph }
