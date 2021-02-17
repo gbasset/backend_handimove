@@ -1,7 +1,7 @@
 const express = require("express")
 const connection = require('../../conf')
 const router = express.Router()
-//  get establishment by id 
+//  get establishment by name
 router.route(['/establishments/:name'])
     .get(function (req, res) {
         const name = req.params.name

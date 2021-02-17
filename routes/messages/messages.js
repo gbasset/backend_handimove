@@ -55,14 +55,14 @@ router.route(['/message/:id'])
             }
         });
     })
-/////// Send a message from the form contact //////////
+/////// Send a message to the form contact //////////
 router.route(['/send'])
     .post(function (req, res) {
         const formData = req.body;
         connection.query('INSERT INTO messages SET ?', formData, (err, results) => {
             if (err) {
                 console.log('Query error: ' + err);
-                res.status(500).send("Erreur  l'ajout du message");
+                res.status(500).send("Erreur lors de l'ajout du message");
             } else {
                 res.json(results).status(200);
             }

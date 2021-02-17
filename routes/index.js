@@ -29,4 +29,7 @@ const images = require("./images/images")
 // route for images 
 const mdph = require("./mdph/mdph")
 
-module.exports = { messages, searchEstablishments, events, city, admin, adminUsers, comments, fav, users, register, authentification, images, mdph }
+module.exports = {
+    messages, searchEstablishments, events, city, admin, adminUsers,
+    comments, fav, users, register, authentification, images, mdph
+}

@@ -127,8 +127,6 @@ router.route(['/event/:id'])
 router.post("/upload/avatar/", upload.array("file"), (req, res, next) => {
     let error = false;
     req.files.map(file => {
-        console.log(file);
-        let arr = []
         let Timestamp = Math.round(new Date().getTime() / 1000)
         let FileName = file.originalname
         let regex1 = /\’\”\;\,\*\./gi;
