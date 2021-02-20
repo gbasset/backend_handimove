@@ -178,4 +178,18 @@ router.route(['/avatar/:id'])
             }
         })
     })
+
+
+router.route(['/img/establish/:id'])
+    .delete(function (req, res) {
+        const id = req.params.id;
+        connection.query(`Delete from images_establishment WHERE id=?`, id, (err, results) => {
+            if (err) {
+                res.status(500).send("Erreur lors de la suppresion de l'image");
+                console.log('Query error: ' + err);
+            } else {
+                res.json(results).status(200);
+            }
+        })
+    })
 module.exports = router
